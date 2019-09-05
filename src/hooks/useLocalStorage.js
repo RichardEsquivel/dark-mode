@@ -7,15 +7,21 @@ const useLocalStorage = (key, initialValue) => {
 	const [storedValue, setStoredValue] = useState(() => {
 		const keyItem = window.localStorage.getItem(key);
 		if (keyItem) {
-			//this will construct javascript object if there is a value for keyItem
-			return JSON.parse(keyItem)
+			return JSON.parse(keyItem);
 		} else {
 			//if there is no value in keyItem it will use the initialValue
 			return initialValue;
-		}
-
+		};
 	});
+	const setValue = value => {
+		setStoredValue(value);
+		//Holding stringified value into local storage
+		window.localStorage.setItem(key, JSON.stringify(value));
+	};
+
+	return [storedValue, setValue];
 
 };
+
 
 export default useLocalStorage;
